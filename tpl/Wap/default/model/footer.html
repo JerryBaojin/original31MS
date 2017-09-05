@@ -1,0 +1,119 @@
+
+<section class="rules">
+    <div class="text">
+        <notempty name="vote.shumat">
+            <div class="prize">{iMicms:$vote['shumat']}</div>
+            <div class="neirong"><?php
+	echo html_entity_decode(htmlspecialchars_decode($vote['shuma']));
+	?></div>
+        </notempty>
+        <notempty name="vote.shumbt">
+            <div class="prize">{iMicms:$vote['shumbt']}</div>
+            <div class="neirong"><?php
+	echo html_entity_decode(htmlspecialchars_decode($vote['shumb']));
+	?></div>
+        </notempty>
+    </div>
+    <div class="text">
+        <notempty name="vote.shumct">
+            <div class="prize">{iMicms:$vote['shumct']}</div>
+            <div class="neirong"><?php
+	echo html_entity_decode(htmlspecialchars_decode($vote['shumc']));
+	?></div>
+        </notempty>
+    </div>
+
+    <div style=" height:60px; width:100%; display:block;"></div>
+
+</section>
+
+
+<section>
+    <if condition="$ismustsub==0">
+        <else/>
+        <div class="pop" id="guanzhu" style="display:none" >
+            <div class="mengceng"></div>
+            <div class="pop_up">
+                <p class="tit_p">{iMicms:$user.ydgzbt}</p><br /><!--  引导关注标题 -->
+                长按二维码，点击识别关注
+                <img id="erweima"  src="<?php echo html_entity_decode(htmlspecialchars_decode($vote['ydgzts'])); ?>" width="180" height="180" style="margin:0 auto;" />
+                <a href="{iMicms:$vote.wxgzurl}" class="gz_btn">{iMicms:$user.ydgzan}</a> <!-- 引导用户关注按钮名称 -->
+            </div>   <!-- 投票引导关注链接 -->
+        </div>
+    </if>
+
+
+    <div class="pop" id="voted" style="display:none;">
+        <div class="mengceng"></div>
+        <div class="pop_up">
+            <span class="closed close_pop_up" id="toupiaook">&nbsp;</span>
+            <p class="tit_p" id="dia_title">投票成功!</p>
+            <p class="tit_txt" id="content">恭喜您为您支持的作品投上了一票！</p>                   <!-- 投票奖励积分说明 -->
+            <if condition="$user['tpjl']==1 && $user['tpjlnum'] gt 0"><p class="tit_txt" id="content">恭喜您获得{iMicms:$user['tpjlnum']}点积分</p></if>
+            <if condition="$user['tpjl']==1 && $user['tpjlnum'] gt 0 && $user['gldzpid'] neq null" > <a href="{iMicms::U('Wap/Lottery/index',array('token'=>$token,'id'=>$user['gldzpid']))}" class="gz_btn">快去花积分，抽大奖吧！</a></if>  <!-- 奖励积分消费活动链接  奖励积分消费活动说明 -->
+            <p class="tit_txt" id="subcontent"></p>
+        </div>
+    </div>
+
+
+    <div class="pop" id="voting2" style="display:none;">
+        <div class="mengceng"></div>
+        <div class="pop_up">
+
+            <p class="tit_txt" >投票数据分析中，请等待......</p>
+        </div>
+    </div>
+
+    <div class="pop" id="voting" style="display:none;">
+        <div class="mengceng"></div>
+        <div class="pop_up">
+            <span class="closed close_pop_up" id="toupiaook2">&nbsp;</span>
+            <p class="tit_p" id="voting_title"></p>
+            <p class="tit_txt" id="voting_content"></p>
+        </div>
+    </div>
+    <eq name='user.yzm' value='1'>
+
+
+        <div class="pop" id="validata" style="display:none">
+            <div class="mengceng" onclick="document.getElementById('validata').style.display='none';"></div>
+            <div class="pop_up" style="width:310px;">
+                <script src="http://api.geetest.com/get.php?gt={iMicms:$user['yzmid']}&width=280" type="text/javascript"></script>
+            </div>
+        </div>
+    </eq>
+
+    <div class="share_overmask" style="display: none;">
+        <div class="share_arrow"></div>
+        <div class="share_words"></div>
+    </div>
+</section>
+
+<link rel="stylesheet" type="text/css" href="{iMicms::STATICS}/vote/index2/daohang.css">
+
+<div class="bot_main">
+    <ul>
+        <li class="ico_1"><span class="ico"><img src="{iMicms::STATICS}/vote//index2/i1.png" /></span><span class="txt">首页</span></li>
+        <li class="ico_2"><span class="ico"><img src="{iMicms::STATICS}/vote//index2/i3.png" /></span><span class="txt">排名</span></li>
+        <if condition="$vote.isavote eq 0">
+            <li class="ico_3"><span class="ico"><img src="{iMicms::STATICS}/vote//index2/i11.png" /></span><span class="txt"><notempty name='ishavezp' >我的参赛<else/>报名</notempty></span></li>
+            <else/>
+            <style>
+                .ico_1,.ico_2,.ico_4{
+                    width: 33.333% !important;
+                }
+            </style>
+        </if>
+        <if condition="$user['tpjl']==1 && $user['tpjlnum'] gt 0 && $user['gldzpid'] neq 0" >
+
+            <li class="ico_4"><span class="ico"><img src="{iMicms::STATICS}/vote/index2/i4.png" /></span><span class="txt">免费抽奖</span></li>
+            <else/>
+  <style>
+                .ico_1,.ico_2,.ico_3{
+                    width: 33.333% !important;
+                }
+            </style>
+        <!--     <li class="ico_4" style="display:none;"><span class="ico"><img src="{iMicms::STATICS}/vote/index2/i4.png" /></span><span class="txt">{iMicms:$vote.dbdhm}</span></li> -->
+        </if>
+    </ul>
+</div>

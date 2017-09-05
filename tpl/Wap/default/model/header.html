@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=uft-8">
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport">
+    <meta content="yes" name="apple-mobile-web-app-capable">
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <meta content="telephone=no" name="format-detection">
+    <meta charset="uft-8">
+    <title>{iMicms:$vote.title}</title>
+    <meta name="description" content="{iMicms:$vote.title}">
+    <link rel="stylesheet" href="{iMicms::STATICS}/vote/index{iMicms:$vote['moban']}/touch.css">
+    <script type="text/javascript" src="{iMicms::STATICS}/vote/index{iMicms:$vote['moban']}/jquery-2.1.3.min.js"></script>
+
+    <script type="text/javascript" src="{iMicms::STATICS}/vote/index{iMicms:$vote['moban']}/app.js"></script>
+    <script type="text/javascript" src="{iMicms::STATICS}/vote/index{iMicms:$vote['moban']}/jquery.masonry.min.js"></script>
+    <style>
+        .slider{display:none;}
+        .focus span{width:5px;height:5px;margin-left:5px;border-radius:50%;background:#CDCDCD;font-size:0}
+        .focus span.current{background:red;}
+    </style>
+
+    <style>
+
+        #audio_btn {
+            position: absolute;
+            right: 10px;
+            top: 18px;
+            z-index: 200;
+            display: none;
+            width: 50px;
+            height: 50px;
+            background-repeat: no-repeat;
+            cursor: pointer;
+        }
+        .loading_background {
+            background-image: url(/images/music_loading.gif);
+            background-size: 30px 30px;
+            opacity: 0.5;
+            background-position: center center;
+        }
+        .loading_yinfu {
+            position: absolute;
+            left: 10px;
+            top: 10px;
+            width: 30px;
+            height: 30px;
+            background-image: url(/images/music_yinfu.png);
+            background-repeat: no-repeat;
+            background-position: center center;
+        }
+        .play_yinfu {
+            background-image: url(/images/music.gif);
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-size: 60px 60px;
+        }
+        .rotate {
+            position: absolute;
+            left: 10px;
+            top: 10px;
+            width: 30px;
+            height: 30px;
+            background-size: 100% 100%;
+            background-image: url(/images/music_off.png);
+            -webkit-animation: rotating 1.2s linear infinite;
+            -moz-animation: rotating 1.2s linear infinite;
+            -o-animation: rotating 1.2s linear infinite;
+            animation: rotating 1.2s linear infinite;
+        }
+        @-webkit-keyframes rotating {
+            from {
+                -webkit-transform: rotate(0deg);
+            }
+            to {
+                -webkit-transform: rotate(360deg);
+            }
+        }
+        @keyframes rotating {
+            from {
+                transform: rotate(0deg);
+            }
+            to {
+                transform: rotate(360deg);
+            }
+        }
+        @-moz-keyframes rotating {
+            from {
+                -moz-transform: rotate(0deg);
+            }
+            to {
+                -moz-transform: rotate(360deg);
+            }
+        }
+        .off {
+            background-image: url(/images/music_no.png);
+            background-size: 30px 30px;
+            background-repeat: no-repeat;
+            background-position: center center;
+        }
+        .rules .text .neirong{
+            padding-bottom:0px;
+        }
+
+
+    </style>
+
+    <script>
+        $(function() {
+            var audio = $('#media');
+            audio[0].play();
+            $("#audio_btn").bind('click', function() {
+                $(this).hasClass("off") ? ($(this).addClass("play_yinfu").removeClass("off"), $("#yinfu").addClass("rotate"), $("#media")[0].play()) : ($(this).addClass("off").removeClass("play_yinfu"), $("#yinfu").removeClass("rotate"), $("#media")[0].pause());
+            });
+        });
+    </script>
+</head>
+<body>
+<div style="display:none"></div>
+<div id="allgonggao" style="width:100%;height:25px;background:rgba(0,0,0,0.6); position:fixed;top:0;z-index:2000; line-height:25px; max-width: 640px;">
+    <marquee id="gonggao" style="font-size:16px;color:white;z-index:2000;" behavior="scroll" scrolldelay="170">{iMicms:$vote.gonggao}</marquee>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function(){
+
+                if($("#gonggao").text()==""){
+                    $("#allgonggao").css("display","none");
+                }
+
+                if($("#media").attr("src")==""){
+                    $("#audio_btn").css("display","none");
+                } }
+
+    )
+
+</script>
+
+<div class="video_exist play_yinfu" id="audio_btn" style="display: block;">
+    <div id="yinfu" class="rotate"></div>
+    <audio preload="auto" autoplay id="media" src="{iMicms:$vote.music}" loop></audio>
+</div>
+
+<header>
+    <img src="{iMicms:$vote.wappicurl}" alt="shareImg" width="0px" height="0px"/>
+
+    <div class="m_head clearfix">
+        <notempty name="ggduotu">
+            <div class="slider">
+                <ul>
+                    <volist name="ggpic" id="li">  <!-- ggt为图片分组 -->
+                        <li><a href="#"><img src="{iMicms:$li.ggurl}"/></a></li>
+                    </volist>
+                </ul>
+            </div>
+            <else/>
+            <img src="{iMicms:$ggpic[0]['ggurl']}" title="{iMicms:$vote.title}">
+        </notempty>
+
+
+        <div class="num_box">
+            <if condition="$vote['isavote'] eq 0">
+                <if condition="$ishavezp eq 1">
+                    <a href="{iMicms::U('Vote/detail',array('token'=>$token,'id'=>$id,'zid'=>$havezpid))}" class="join_us">我的参赛</a>
+                    <elseif  condition="$istime eq 1"/>
+                    <a href="{iMicms::U('Vote/signup',array('token'=>$token,'id'=>$id))}" class="join_us">我要报名</a>
+                    <else />
+                </if>
+            </if>
+<script>
+    window.addEventListener('load',function(){
+        console.log();
+    })
+
+</script>
+            <ul class="num_box_ul">
+                <if condition="$vote['isviewcount'] eq 0">
+                    <li>
+                        <span class="text">已报名</span>
+                        <span>{iMicms:$rc}</span>
+                    </li>
+                    <li>
+                        <span class="text">投票人次</span>
+                        <span>{iMicms:$tpl}</span>
+                    </li>
+                    <li>
+                        <span class="text">浏览量</span>
+                        <span>{iMicms:$check}</span>
+                    </li>
+                    <else/>
+                    <li style="width:100%" >
+                        <div  class="text" style="    width: 100%;
+    text-align: center;
+    color: yellow;    margin-top: 15px;
+    font-size: 17px;">浏览量:{iMicms:$check}</div>
+
+                    </li>
+                </if>
+            </ul>
+
+
+
+
+
+            <script language="JavaScript">
+
+
+                var currentDate = new Date();
+                var strEndTime = new Date(<?php echo $vote['enddate'] ?>*1000);
+                var EndTime=new Date(strEndTime);
+
+                var days= EndTime - currentDate;
+                EndTimeMsg = parseInt(days / 1000);//精确到秒
+
+                function show() {
+                    h = Math.floor(EndTimeMsg / 60 / 60);
+                    m = Math.floor((EndTimeMsg - h * 60 * 60) / 60);
+                    s = Math.floor((EndTimeMsg - h * 60 * 60 - m * 60));
+                    document.getElementById("DD").innerHTML = parseInt(h/24);
+                    document.getElementById("HH").innerHTML = h-parseInt(h/24)*24;
+                    document.getElementById("MM").innerHTML = m;
+                    document.getElementById("SS").innerHTML = s;
+                    EndTimeMsg--;
+                    if (EndTimeMsg < 0)
+                    {
+                        document.getElementById("DD").innerHTML = "0";
+                        document.getElementById("HH").innerHTML = "00";
+                        document.getElementById("MM").innerHTML = "00";
+                        document.getElementById("SS").innerHTML = "00";;
+                    }
+                }
+                setInterval("show()", 1000)
+
+
+            </script>
+            <div style="width:100%;height:30px;line-height:30px;text-align:center;position:relative;margin-bottom:30px;color:#fff;opacity:0.7; ">
+                距离活动结束还剩:<strong id="DD"></strong>天 <strong id="HH"></strong>时 <strong id="MM"></strong>分 <strong id="SS"></strong>秒
+            </div>
+            <img src="{iMicms::STATICS}/vote/index{iMicms:$vote['moban']}/mw_004.jpg" />
+        </div>
+        <div class="search">
+            <form action="{iMicms::U('Vote/search')}" id="search_form" method="post" accept-charset="utf-8">
+                <input type="hidden" name="id" value="{iMicms:$id}" />
+                <input type="hidden" name="token" value="{iMicms:$token}" />
+                <div class="search_con">
+                    <div class="btn"><input type="submit" name="seachid" id="searchBtn" value="搜索"></div>
+                    <div class="text_box"><input type="search" id="searchText" value="" name="keyword" placeholder="{iMicms:$vote['innerText']}"></div>
+                </div>
+            </form>
+        </div>    </div>
+</header>
+<section class="content" id="get_info" data-rid="503" data-sort="" data-kw="" data-page="">
+
+<div class="text_a clearfix" id="sort">
+    <if condition=" $vote.isshowNew eq 1"> <a href="{iMicms::U('Vote/index',array('token'=>$token,'id'=>$id))}" class="active">参赛列表</a>
+        <else/>
+        <a href="{iMicms::U('Vote/index',array('token'=>$token,'id'=>$id))}" class="active">最新参赛</a>
+
+    </if>
+    <a href="{iMicms::U('Vote/rank',array('token'=>$token,'id'=>$id))}" >投票排行</a>
+    <if condition=" $vote.$isshowNew eq 1 ">
+        <a href="{iMicms::U('Vote/top',array('token'=>$token,'id'=>$id))}" >TOP300</a>
+        <else/>
+        <style>
+            .content .text_a a{
+                width: 48.5% !important;
+            }
+        </style>
+    </if>
+</div>

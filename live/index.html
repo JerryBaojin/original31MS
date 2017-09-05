@@ -1,0 +1,71 @@
+
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+
+    <title>无标题文档</title>
+</head>
+
+<body>
+<div id="app">
+
+    <input type="text" v-model="number" placeholder="准备达到的流量:"/>
+    {{number}}
+    <input type="text"  v-model="ur"  placeholder="请输入直播的地址:"/>
+    <input  @click="preinit" type="submit">
+{{frestime}}
+
+<div>
+    <iframe style="width: 0; height:0"  v-bind:src="url" > </iframe>
+    <iframe style="width: 0; height:0"  v-bind:src="url"  > </iframe>
+    <iframe style="width: 0; height:0"  v-bind:src="url"  > </iframe>
+    <iframe style="width: 0; height:0"  v-bind:src="url"  > </iframe>
+    <iframe style="width: 0; height:0"  v-bind:src="url"  > </iframe>
+    <iframe style="width: 0; height:0"  v-bind:src="url"  > </iframe>
+    <iframe style="width: 0; height:0"  v-bind:src="url"  > </iframe>
+    <iframe style="width: 0; height:0"  v-bind:src="url"  > </iframe>
+    <iframe style="width: 0; height:0"  v-bind:src="url"  > </iframe>
+    <iframe style="width: 0; height:0"  v-bind:src="url"  > </iframe>
+</div>
+</div>
+<!--    https://live.xinhuaapp.com/?companyId=149852618370414&id=1503025614947761-->
+<script src="vue.min.js">
+
+</script>
+<script>
+    var vm=new Vue({
+        el:"#app",
+        data:{
+            flag:false,
+            number:'',
+            ur:'',
+            url:'',
+            frestime:1
+        },
+        methods:{
+            preinit:function(){
+                console.log(this.frestime);
+
+
+                var that=this;
+
+
+          var inte=  timer= setInterval(function(){
+              console.log(that.frestime >=that.number);
+
+                if( that.frestime >=that.number){
+                    clearInterval(inte);
+                    that.url=null;
+                    return false;
+                }
+                   that.url=that.ur+'&time='+that.frestime;
+                   that.frestime+=10;
+
+                },3000);
+            }
+        }
+    })
+</script>
+</body>
+</html>
